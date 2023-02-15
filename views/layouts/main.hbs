@@ -52,4 +52,24 @@
         </header>
 
         <main>
+
             <!-- In case of error, display the following div-->
+
+           
+            {{#if error}}
+            <div class="error-box">
+                {{#each error}}
+                <p>{{error}}</p>
+                {{/each}}
+            </div>
+            {{/if}}
+
+            {{{body}}}
+        </main>
+
+        <footer>SoftUni &copy; 2022 | Design by Viktor Kostadinov</footer>
+    </div>
+
+</body>
+
+</html>

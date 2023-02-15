@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const Auction = require('../models/Auction.js');
-const auctionServices = require('../services/auctionServices.js');
+const auctionServices = require('../services/authServices.js');
 
 const auctionUtils = require('../utils/AuctionUtils.js');
 
