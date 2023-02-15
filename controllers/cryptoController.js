@@ -12,7 +12,7 @@ const { isAuth, authentication } = require('../middlewares/authMddleware.js');
 exports.getCreateCrypto = (req, res) => {//router.get('/'create',isAuth,(req, res))=>{
     console.log(req.user);
 
-    res.render('Auction/create');
+    res.render('аuction/create');
 };
 exports.postCreateCrypto = async (req, res) => {
     // console.log(req.body);//Object на данните от url
@@ -97,7 +97,7 @@ exports.postEditCrypto = async (req, res) => {
         return res.status(400).render('Auction/edit', { error: getErrorMessage(error) })
 
     }
-    res.redirect(`/Auctions/${req.params.auctionId}/details`);
+    res.redirect(`/аuctions/${req.params.auctionId}/details`);
 };
 
 exports.getDeleteCrypto = async (req, res) => {
@@ -122,7 +122,7 @@ exports.getWish = async (req, res) => {//router.get('/:cryptoId/buy',isAuth)
     } catch (error) {
         return res.status(400).render('home/404', { error: getErrorMessage(error) })
     }
-    res.redirect(`/Auctions/${req.params.auctionId}/details`);
+    res.redirect(`/аuctions/${req.params.auctionId}/details`);
 }
 
 
@@ -133,7 +133,7 @@ exports.getProfile = async (req, res) => {
     let wished = await AuctionServices.getMyWishAuction(userId);
     console.log(userId)
     console.log(wished)
-    res.render('Auction/profile', { user, wished });
+    res.render('аuction/profile', { user, wished });
 
 }
 
