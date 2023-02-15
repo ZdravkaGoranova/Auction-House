@@ -1,56 +1,53 @@
+<main>
 
+    {{#if error}}
+    <div class="errors">
+        {{#each error}}
 
-        <main>
+        <p>{{this.error}}</p>
 
-            <!-- In case of error, display the following div-->
-            <!--
+        {{/each}}
+    </div>
+    {{/if}}
 
-            <div class="error-box">
-                <p>Show each error in a separate paragraph</p>
-            </div>
+    <!-- Register Page -->
+    <section id="register-section" class="narrow">
 
-            -->
+        <h1 class="item">Register</h1>
 
-            <!-- Register Page -->
-            <section id="register-section" class="narrow">
+        <div class="item padded align-center">
 
-                <h1 class="item">Register</h1>
+            <form class="aligned" method="post">
 
-                <div class="item padded align-center">
+                <label>
+                    <span>Email</span>
+                    <input type="text" name="email">
+                </label>
+                <label>
+                    <span>First name</span>
+                    <input type="text" name="firstName">
+                </label>
+                <label>
+                    <span>Last name</span>
+                    <input type="text" name="lastName">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password">
+                </label>
+                <label>
+                    <span>Repeat Password</span>
+                    <input type="password" name="confirmPassword">
+                </label>
 
-                    <form class="aligned" method="post" >
-
-                        <label>
-                            <span>Email</span>
-                            <input type="text" name="email">
-                        </label>
-                        <label>
-                            <span>First name</span>
-                            <input type="text" name="firstName">
-                        </label>
-                        <label>
-                            <span>Last name</span>
-                            <input type="text" name="lastName">
-                        </label>
-                        <label>
-                            <span>Password</span>
-                            <input type="password" name="password">
-                        </label>
-                        <label>
-                            <span>Repeat Password</span>
-                            <input type="password" name="confirmPassword">
-                        </label>
-
-                        <div class="align-center">
-                            <input class="action" type="submit" value="Create Account">
-                        </div>
-
-                    </form>
-
+                <div class="align-center">
+                    <input class="action" type="submit" value="Create Account">
                 </div>
 
-            </section>
+            </form>
 
-        </main>
+        </div>
 
-  
+    </section>
+
+</main>

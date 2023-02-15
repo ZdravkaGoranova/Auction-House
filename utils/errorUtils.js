@@ -5,12 +5,11 @@ function getFirstMongooseError(error) {
     const errors = Object.keys(error.errors).map(key => error.errors[key].message);
     //или  const firstError = Object.values(error.errors)[0].message;
 
-    return errors;//  
-    //return errors[0];//   return firstError;
+
+    return errors[0];//   return firstError;
 };
 
 exports.getErrorMessage = (error) => {
-
     // console.log(error)
     // console.log(error.name)
     // console.log(error.message)
@@ -26,3 +25,7 @@ exports.getErrorMessage = (error) => {
             return error.message;
     };
 }
+
+
+// case 'ValidationError':
+//             return error.errors;
