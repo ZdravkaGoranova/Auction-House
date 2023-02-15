@@ -29,7 +29,7 @@ const auctionSchema = new mongoose.Schema({
 
     price: {
         type: Number,
-        min: 1,
+        min: 0,
         required: true,
 
     },
@@ -44,6 +44,10 @@ const auctionSchema = new mongoose.Schema({
     bidder: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
+    },
+    closed: {
+        type: Boolean,
+        default: false,
     },
 
     // owner: {

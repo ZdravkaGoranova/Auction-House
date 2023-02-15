@@ -20,7 +20,7 @@
             <nav class="main-nav nav-mid">
                 <ul>
                     <li>
-                        <a href="/search">Browse</a>
+                        <a href="/catalog">Browse</a>
                     </li>
                     <!-- User actions -->
                     {{#if isAuthenticated}}
@@ -52,17 +52,14 @@
         </header>
 
         <main>
-
             <!-- In case of error, display the following div-->
-
             {{#if error}}
             <div class="error-box">
-                <p>Show each error in a separate paragraph</p>
+                {{#each error}}
+                <p>{{error}}</p>
+                {{/each}}
             </div>
             {{/if}}
-
-
-            <!-- Home Page -->
 
             {{{body}}}
         </main>

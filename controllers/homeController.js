@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Book = require('../models/Book.js');
 const bookServices = require('../services/bookServices.js');
 
-const bookUtils = require('../utils/bookUtils.js');
+const bookUtils = require('../utils/AuctionUtils.js');
 
 
 router.get('/', (req, res) => {
@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
 
 router.get('/catalog', async (req, res) => {//
 
-    let books = await Book.find().lean();
+    let auctions = await Book.find().lean();
     // console.log(cryptos)
     // res.render('index', { cubes, search, difficultyFrom, diffficultyTo });
-    res.render('book/catalog', { books });
+    res.render('product/catalog', { auctions });
 
 });
 router.get('/search', async (req, res) => {

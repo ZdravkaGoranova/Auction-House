@@ -1,6 +1,6 @@
 const Book = require('../models/Book.js');
 
-const bookUtils = require('../utils/bookUtils.js');
+const bookUtils = require('../utils/AuctionUtils.js');
 
 exports.search = async (name, paymentMethod) => {
 

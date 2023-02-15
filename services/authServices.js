@@ -7,7 +7,7 @@ const { SECRET } = require('../constans.js')
 exports.findByUsername = (username) => User.findOne({ username });//User.exists({username})
 exports.findByEmail = (email) => User.findOne({ email });//User.exists({email})
 
-exports.register = async (email, username, password, confirmPassword) => {
+exports.register = async (email, firstName, lastName, password, confirmPassword) => {
 
     if (password !== confirmPassword) {
         throw new Error('Password missmatc!');
@@ -17,31 +17,28 @@ exports.register = async (email, username, password, confirmPassword) => {
     const existingUser = await User.findOne({
         $or: [
             { email },
-            { username }
+            { firstName },
+            { lastName }
         ]
     });
-
     if (existingUser) {
         throw new Error('User  exists!');
     }
+   
 
-    if (username.length < 4) {
-        throw new Error('Username is too short!');
-    }
-
-
-    if (email.length < 10) {
-        throw new Error('Username is too short!');
-    }
-
-
-    if (password.length < 3) {
-        throw new Error('The password should be at least four characters long!');
-    }
+    // if (password.length < 5) {
+    //     throw new Error('The password should be at least four characters long!');
+    // }
+    // if (firstName.length < 1) {
+    //     throw new Error('FirstName is too short!');
+    // }
+    // if (lastName.length < 1) {
+    //     throw new Error('LastName is too short!');
+    // }
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-    await User.create({ email, username, password: hashPassword });
+    await User.create({ email, firstName, lastName, sername, password: hashPassword });
 
     return this.login(email, password);
 };

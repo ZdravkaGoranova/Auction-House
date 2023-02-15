@@ -12,7 +12,7 @@ const userShema = new mongoose.Schema({
     }, password: {
         type: String,
         required: [true, 'Password is required!'],
-        minLength: 5,
+          minLength: 5,
     },
 
     firstName: {
@@ -22,8 +22,7 @@ const userShema = new mongoose.Schema({
     },
     lastName: {
         type: String,
-        minLength: 1,
-
+        //minLength: 1,
         required: [true, 'Email is required!'],
     },
 

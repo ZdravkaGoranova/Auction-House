@@ -1,9 +1,9 @@
 
 const router = require('express').Router();
 
-const Book = require('../models/Book.js');
-const bookServices = require('../services/bookServices.js');
-const bookUtils = require('../utils/bookUtils.js');
+const Auction = require('../models/Auction.js');
+const AuctionServices = require('../services/authServices.js');
+const AuctionUtils = require('../utils/AuctionUtils.js');
 const { getErrorMessage } = require('../utils/errorUtils.js')
 const { isAuth, authentication } = require('../middlewares/authMddleware.js');
 
@@ -12,27 +12,25 @@ const { isAuth, authentication } = require('../middlewares/authMddleware.js');
 exports.getCreateCrypto = (req, res) => {//router.get('/'create',isAuth,(req, res))=>{
     console.log(req.user);
 
-    res.render('book/create');
+    res.render('Auction/create');
 };
 exports.postCreateCrypto = async (req, res) => {
     // console.log(req.body);//Object на данните от url
     console.log(req.user);
 
     try {
-        const { title, author, image, bookReview, genre, stars, wishingList } = req.body;
+        const { title, category, image, price, description } = req.body;
 
-        let book = new Book({
+        let auction = new Auction({
             title,
-            author,
+            category,
             image,
-            bookReview,
-            genre,
-            stars,
-            wishingList,
+            price,
+            description,
             owner: req.user._id,
         });
-        console.log(book);
-        await book.save();//запазва в db
+        console.log(auction);
+        await auction.save();//запазва в db
 
         //или 
         //await cryptoService.create(req.user._id, { name, image, price, description, paymentMethod })
@@ -40,24 +38,24 @@ exports.postCreateCrypto = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         //return res.render('auth/404');
-        return res.status(400).render('book/create', { error: getErrorMessage(error) })
+        return res.status(400).render('auction/create', { error: getErrorMessage(error) })
     }
     res.redirect('/catalog');
 };
 
 exports.getDetails = async (req, res) => {//router.get('/:cryptoId/details',(req,res)=>{)
 
-    const book = await bookServices.getOne(req.params.bookId);
+    const auction = await AuctionServices.getOne(req.params.auctionId);
     //console.log(crypto)
 
-    const isOwner = bookUtils.isOwner(req.user, book);//const isOwner = crypto.owner==req.user._id;
+    const isOwner = AuctionUtils.isOwner(req.user, auction);//const isOwner = crypto.owner==req.user._id;
     // console.log(isOwner)
 
-    const isWished = book.wishingList?.some(id => id == req.user?._id);
+    const isWished = Auction.wishingList?.some(id => id == req.user?._id);
     //console.log(isWished)
     //crypto.paymentMethod = paymentMethodsMap[crypto.paymentMethod]
 
-    if (!book) {
+    if (!auction) {
         return res.render('home/404');
     }
 
@@ -67,54 +65,52 @@ exports.getDetails = async (req, res) => {//router.get('/:cryptoId/details',(req
     // console.log(`=========================================`)
     // console.log(crypto.owner.toString())
 
-    res.render('book/details', { book, isOwner, isWished });
+    res.render('Auction/details', { Auction, isOwner, isWished });
 };
 
 exports.getEditCrypto = async (req, res) => {
 
-    const book = await bookServices.getOne(req.params.bookId);
-    //const paymentMethods = bookUtils.generatePaymentMethod(book.paymentMethod);
+    const auction = await AuctionServices.getOne(req.params.auctionId);
+    //const paymentMethods = AuctionUtils.generatePaymentMethod(Auction.paymentMethod);
 
-    if (!bookUtils.isOwner(req.user, book)) {
+    if (!AuctionUtils.isOwner(req.user, auction)) {
         return res.render('home/404')// throw new Error('You are not an owner!');
     }
 
-    res.render('book/edit', { book });
+    res.render('Auction/edit', { auction });
 };
 
 exports.postEditCrypto = async (req, res) => {
 
-    const { title, author, image, bookReview, genre, stars, wishingList } = req.body
+    const { title, category, image, price, description } = req.body
 
     try {
-        await bookServices.update(req.params.bookId, {
+        await AuctionServices.update(req.params.AuctionId, {
             title,
-            author,
+            category,
             image,
-            bookReview,
-            genre,
-            stars,
-            wishingList
+            price,
+            description
         })
     } catch (error) {
         // console.log(error.message);
-        return res.status(400).render('book/edit', { error: getErrorMessage(error) })
+        return res.status(400).render('Auction/edit', { error: getErrorMessage(error) })
 
     }
-    res.redirect(`/books/${req.params.bookId}/details`);
+    res.redirect(`/Auctions/${req.params.auctionId}/details`);
 };
 
 exports.getDeleteCrypto = async (req, res) => {
-    const book = await bookServices.getOne(req.params.bookId);
+    const auction = await AuctionServices.getOne(req.params.auctionId);
 
-    const isOwner = bookUtils.isOwner(req.user, book);
+    const isOwner = AuctionUtils.isOwner(req.user, auction);
     console.log(isOwner)
 
     if (!isOwner) {
         return res.render('home/404');
     }
 
-    await bookServices.delete(req.params.bookId);//await cryptoService.delete(crypto);
+    await AuctionServices.delete(req.params.auctionId);//await cryptoService.delete(crypto);
     res.redirect('/catalog');
 };
 
@@ -122,11 +118,11 @@ exports.getWish = async (req, res) => {//router.get('/:cryptoId/buy',isAuth)
     // const crypto = await cryptoService.getOne(req.params.cryptoId);
     // const isOwner = cryptoUtils.isOwner(req.user, crypto);
     try {
-        await bookServices.wish(req.user._id, req.params.bookId, req, res);
+        await AuctionServices.wish(req.user._id, req.params.auctionId, req, res);
     } catch (error) {
         return res.status(400).render('home/404', { error: getErrorMessage(error) })
     }
-    res.redirect(`/books/${req.params.bookId}/details`);
+    res.redirect(`/Auctions/${req.params.auctionId}/details`);
 }
 
 
@@ -134,10 +130,10 @@ exports.getProfile = async (req, res) => {
 
     const userId = req.user._id;
     const user = req.user;
-    let wished = await bookServices.getMyWishBook(userId);
+    let wished = await AuctionServices.getMyWishAuction(userId);
     console.log(userId)
     console.log(wished)
-    res.render('book/profile', { user, wished });
+    res.render('Auction/profile', { user, wished });
 
 }
 
@@ -151,16 +147,16 @@ exports.getProfile = async (req, res) => {
 //     try {
 //         const userI = req.user._id;
 //         const user = req.user;
-//         let books = await Book.find().lean();
-//         // const wishArray  = books.wishingList?.filter(id => id == req.user?._id);
+//         let Auctions = await Auction.find().lean();
+//         // const wishArray  = Auctions.wishingList?.filter(id => id == req.user?._id);
 
-//        //const filteredArray = books.filter(book => book.wishingList.includes(new ObjectId('req.user._id')));
-//        const filteredArray = books.filter(book => book.wishingList.includes('req.user._id'));
+//        //const filteredArray = Auctions.filter(Auction => Auction.wishingList.includes(new ObjectId('req.user._id')));
+//        const filteredArray = Auctions.filter(Auction => Auction.wishingList.includes('req.user._id'));
 
 //         console.log(req.user._id)
 //         console.log(filteredArray);
 
-//         res.render('book/profile', { user, books });
+//         res.render('Auction/profile', { user, Auctions });
 //     } catch (error) {
 
 //         return res.status(400).render('home/404', { error: getErrorMessage(error) })
