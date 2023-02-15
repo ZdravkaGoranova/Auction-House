@@ -3,62 +3,100 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Store</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-
+    <link rel="stylesheet" href="/static/css/site.css">
+    <title>Auction House</title>
 </head>
 
 <body>
 
-    <header class="header">
+    <div id="page-content">
 
-        <div class="header">
-            <nav class="navbar">
-                <a href="/">Home</a>
-                <a href="/catalog">Catalog</a>
-                {{#if isAuthenticated}}
-                <a href="/profile">Profile</a>
-                <a href="/create">Create Review</a>
-                <a href="/logout">Logout</a>
-                {{else}}
-                <!--Only for guest-->
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-                {{/if}}
+        <header>
+            <a href="/" class="title-logo">
+                <img src="/static/assets/logo.png">
+                <span>Auction House</span>
+            </a>
+            <nav class="main-nav nav-mid">
+                <ul>
+                    <li>
+                        <a href="/search">Browse</a>
+                    </li>
+                    <!-- User actions -->
+                    {{#if isAuthenticated}}
+                    <li class="user">
+                        <a href="/create">Publish</a>
+                    </li>
+
+                    <!-- Bonus action -->
+                    <!--
+                    <li class="user">
+                        <a href="#">Closed Auctions</a>
+                    </li>
+                    -->
+
+                    <li class="user">
+                        <a href="/logout">Logout</a>
+                    </li>
+                    <!-- Guest actions -->
+                      {{else}}
+                    <li class="guest">
+                        <a href="/register">Register</a>
+                    </li>
+                    <li class="guest">
+                        <a href="/login">Login</a>
+                    </li>
+                     {{/if}}
+                </ul>
             </nav>
-        </div>
+        </header>
 
-    </header>
+        <main>
 
-    <section class="home" id="home">
+            <!-- In case of error, display the following div-->
+            <!--
 
-        {{#if error}}
-
-        <div>
-            <div class="errorContainer">
-                <p>{{error}}</p>
+            <div class="error-box">
+                <p>Show each error in a separate paragraph</p>
             </div>
-        </div>
 
-        {{/if}}
+            -->
 
-        {{{body}}}
+            <!-- Home Page -->
+            <section id="catalog-section">
 
-    </section>
+                <h1 class="item">Home</h1>
+
+                <div class="item">
+
+                    <div class="layout left med">
+                        <div class="col">
+                            <img src="/static/assets/splash.jpg" class="img-med">
+                        </div>
+
+                        <div class="content pad-med">
+                            <p>Welcome to the online Auction House.</p>
+                            <p>Buy and sell items in categories Real Estate, Vehicles, Furniture, Electronics and
+                                Others. Browse available items and place your bid. Create a new listing and collect the
+                                highest offer.
+                            </p>
+
+                            <div class="align-center">
+                                <a class="action" href="/search">Browse Listings</a>
+                                <a class="action" href="">Publish Auction</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer>SoftUni &copy; 2022 | Design by Viktor Kostadinov</footer>
+    </div>
 
 </body>
 
 </html>
-
-
-<!-- In case of error, you should display div with class "errorContainer" -->
-<!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-
-<!-- <div>
-            <div class="errorContainer">
-                <p>Error</p>
-            </div>
-        </div> -->
