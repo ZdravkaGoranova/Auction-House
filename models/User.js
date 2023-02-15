@@ -3,22 +3,28 @@ const mongoose = require('mongoose');
 
 const userShema = new mongoose.Schema({
 
-    username: {
-        type: String,
-        required: [true, 'Username is required!'],
-        minLength: 4, 
-    },
     email: {
         type: String,
-        minLength: 10, 
 
-        required: [true, 'Email is required!'],
+        match: [/^[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+$/, 'Invalid URL'],
+        required: [true, 'Username is required!'],
 
-    },
-    password: {
+    }, password: {
         type: String,
         required: [true, 'Password is required!'],
-        minLength: 3,
+        minLength: 5,
+    },
+
+    firstName: {
+        type: String,
+        required: [true, 'Username is required!'],
+        minLength: 1,
+    },
+    lastName: {
+        type: String,
+        minLength: 1,
+
+        required: [true, 'Email is required!'],
     },
 
 });
