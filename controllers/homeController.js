@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-const Book = require('../models/Book.js');
-const bookServices = require('../services/bookServices.js');
+const Auction = require('../models/Auction.js');
+const auctionServices = require('../services/auctionServices.js');
 
-const bookUtils = require('../utils/AuctionUtils.js');
+const auctionUtils = require('../utils/AuctionUtils.js');
 
 
 router.get('/', (req, res) => {
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 router.get('/catalog', async (req, res) => {//
 
-    let auctions = await Book.find().lean();
+    let auctions = await Auction.find().lean();
     // console.log(cryptos)
     // res.render('index', { cubes, search, difficultyFrom, diffficultyTo });
     res.render('product/catalog', { auctions });
@@ -23,10 +23,10 @@ router.get('/catalog', async (req, res) => {//
 router.get('/search', async (req, res) => {
 
     const { name, paymentMethod } = req.query;
-    const book = await bookServices.search(name, paymentMethod);
-    const paymentMethods = bookUtils.generatePaymentMethod(paymentMethod);
+    const auction = await auctionServices.search(name, paymentMethod);
+    const paymentMethods = auctionUtils.generatePaymentMethod(paymentMethod);
 
-    res.render('home/search', { book, paymentMethods, name });
+    res.render('home/search', { auction, paymentMethods, name });
 
 });
 
